@@ -109,7 +109,9 @@ class Calculator
                 }
                 continue;
             }
-            if ($match === '-' && ($key === 0 || in_array($matchs[0][$key - 1], ['+', '-', '*', '/', '(']))) {
+
+            //修复 $matchs[0][$key - 1] 不存在出现的 Notice
+            if ($match === '-' && ($key === 0 || (isset($matchs[0][$key - 1]) && in_array($matchs[0][$key - 1], ['+', '-', '*', '/', '('])))) {
                 $numStack->push($match . ($matchs[0][$key + 1]));
                 unset($matchs[0][$key + 1]);
                 continue;
